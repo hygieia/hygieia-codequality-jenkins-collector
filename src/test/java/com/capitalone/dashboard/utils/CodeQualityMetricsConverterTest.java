@@ -321,6 +321,42 @@ public class CodeQualityMetricsConverterTest {
     }
 
     @Test
+    public void emptyPmdReport() {
+        PmdReport report = new PmdReport();
+
+        CodeQualityMetricsConverter testee = new CodeQualityMetricsConverter();
+        report.accept(testee);
+
+        CodeQuality codeQualityMetrics = testee.produceResult();
+
+        assertThat(codeQualityMetrics.getMetrics()).extracting("name","formattedValue","value","status")
+                .contains(
+                        tuple("blocker_violations","0","0",CodeQualityMetricStatus.Ok),
+                        tuple("critical_violations","0","0",CodeQualityMetricStatus.Ok),
+                        tuple("major_violations","0","0",CodeQualityMetricStatus.Ok),
+                        tuple("violations","0","0",CodeQualityMetricStatus.Ok));
+    }
+
+    @Test
+    public void emptyPmdViolationsReport() {
+        PmdReport report = new PmdReport();
+        PmdReport.PmdFile file = new PmdReport.PmdFile();
+        report.setFiles(Arrays.asList(file));
+
+        CodeQualityMetricsConverter testee = new CodeQualityMetricsConverter();
+        report.accept(testee);
+
+        CodeQuality codeQualityMetrics = testee.produceResult();
+
+        assertThat(codeQualityMetrics.getMetrics()).extracting("name","formattedValue","value","status")
+                .contains(
+                        tuple("blocker_violations","0","0",CodeQualityMetricStatus.Ok),
+                        tuple("critical_violations","0","0",CodeQualityMetricStatus.Ok),
+                        tuple("major_violations","0","0",CodeQualityMetricStatus.Ok),
+                        tuple("violations","0","0",CodeQualityMetricStatus.Ok));
+    }
+
+    @Test
     public void sumsMultiplePmdReports() {
         PmdReport report1 = this.producePmdReport();
         PmdReport report2 = this.producePmdReport();
