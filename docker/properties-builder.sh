@@ -64,8 +64,12 @@ jenkins-codequality.apiKey=${JENKINS_API_KEY}
 #Determines if build console log is collected - defaults to false
 jenkins-codequality.saveLog=${JENKINS_SAVE_LOG:-true}
 
-#pattern to find cucubmer reports
-jenkins-codequality.artifactRegex[0]=${JENKINS_CODEQUALITY_JSON_FILENAME:-test.xml}
+#pattern to find code quality files 
+jenkins-codequality.artifactRegex.junit=${JENKINS_CODEQUALITY_JUNIT_REGEX:-TEST-.*\\.xml}
+jenkins-codequality.artifactRegex.findbugs=${JENKINS_CODEQUALITY_FINDBUGS_REGEX:-findbugsXml.xml}
+jenkins-codequality.artifactRegex.pmd=${JENKINS_CODEQUALITY_PMD_REGEX:-pmd.xml}
+jenkins-codequality.artifactRegex.checkstyle=${JENKINS_CODEQUALITY_CHECKSTYLE_REGEX:-checkstyle-result.xml}
+jenkins-codequality.artifactRegex.jacoco=${JENKINS_CODEQUALITY_JACOCO_REGEX:-jacoco.xml}
 
 #map the entry localhost so URLS in jenkins resolve properly
 # Docker NATs the real host localhost to 10.0.2.2 when running in docker
